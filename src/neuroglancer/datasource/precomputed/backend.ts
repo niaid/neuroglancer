@@ -263,11 +263,15 @@ chunkDecoders.set(VolumeChunkEncoding.COMPRESSED_SEGMENTATION, decodeCompressedS
         // computeChunkBounds.
         let chunkPosition = this.computeChunkBounds(chunk);
         let chunkDataSize = chunk.chunkDataSize!;
-        url = `${parameters.url}/${chunkPosition[0]}-${chunkPosition[0] + chunkDataSize[0]}_` +
+        url = `${parameters.url}%5C${chunkPosition[0]}-${chunkPosition[0] + chunkDataSize[0]}_` +
             `${chunkPosition[1]}-${chunkPosition[1] + chunkDataSize[1]}_` +
             `${chunkPosition[2]}-${chunkPosition[2] + chunkDataSize[2]}`;
       }
-      response = await cancellableFetchSpecialOk(url, {}, responseArrayBuffer, cancellationToken);
+      const headers = new Headers();
+      headers.set('Authorization', `Bearer ${this.parameters.access_token}`);
+      let ri: RequestInit = {};
+      ri.headers = headers;      
+      response = await cancellableFetchSpecialOk(url, ri, responseArrayBuffer, cancellationToken);
     } else {
       this.computeChunkBounds(chunk);
       const {gridShape} = this;
