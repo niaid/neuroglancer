@@ -17,8 +17,19 @@
 /**
  * @file Main entry point for default neuroglancer viewer.
  */
-import {setupDefaultViewer} from 'neuroglancer/ui/default_viewer_setup';
-
-window.addEventListener('DOMContentLoaded', () => {
-  setupDefaultViewer();
-});
+ import {bindDefaultCopyHandler, bindDefaultPasteHandler} from 'neuroglancer/ui/default_clipboard_handling';
+ import {setDefaultInputEventBindings} from 'neuroglancer/ui/default_input_event_bindings';
+ import {makeMinimalViewer} from 'neuroglancer/ui/minimal_viewer';
+ import {disableContextMenu, disableWheel} from 'neuroglancer/ui/disable_default_actions';
+ import 'neuroglancer/ui/default_viewer.css';
+ 
+ (<any>window)['neuroglancerSetup'] = () =>
+{
+  disableContextMenu();
+  disableWheel();
+  let viewer = (<any>window)['viewer'] = makeMinimalViewer();
+  setDefaultInputEventBindings(viewer.inputEventBindings);
+  bindDefaultCopyHandler(viewer);
+  bindDefaultPasteHandler(viewer);
+  return viewer;
+};
