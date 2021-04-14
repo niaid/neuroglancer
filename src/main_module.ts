@@ -17,6 +17,8 @@ import {defaultCredentialsManager} from 'neuroglancer/credentials_provider/defau
 import {credentialsKey} from 'neuroglancer/datasource/brainmaps/api';
 import {BrainmapsCredentialsProvider} from 'neuroglancer/datasource/brainmaps/credentials_provider';
 
+import {disableContextMenu, disableWheel} from 'neuroglancer/ui/disable_default_actions';
+
 
 /**
  * Sets up the default neuroglancer viewer.
@@ -83,4 +85,24 @@ export default class Neuroglancer {
   version() {
     return '0.0.1';
   }
+}
+
+export const hedwigSetup = (options: {
+  target: HTMLElement | undefined,
+  bundleRoot: string | undefined
+}) => {
+  // image_register();
+  registerLayerType('image', ImageUserLayer);
+  registerVolumeLayerType(VolumeType.IMAGE, ImageUserLayer);
+
+  registerProvider('precomputed', () => new PrecomputedDataSource());
+
+
+  disableContextMenu();
+  disableWheel();
+  let viewer = makeMinimalViewer({}, options.target);
+  setDefaultInputEventBindings(viewer.inputEventBindings);
+  bindDefaultCopyHandler(viewer);
+  bindDefaultPasteHandler(viewer);
+  return viewer;
 }
