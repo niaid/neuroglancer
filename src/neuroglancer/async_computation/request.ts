@@ -16,6 +16,7 @@
 
 import {AsyncComputationSpec} from 'neuroglancer/async_computation';
 import {CANCELED, CancellationToken} from 'neuroglancer/util/cancellation';
+import {asyncComputationWorkerFileName} from "../../asyncComputationWorkerFileName"
 
 const freeWorkers: Worker[] = [];
 const pendingTasks = new Map<number, {msg: any, transfer: Transferable[] | undefined}>();
@@ -34,7 +35,7 @@ function returnWorker(worker: Worker) {
 }
 
 function getNewWorker(): Worker {
-  const worker = new Worker('async_computation.bundle.js');
+  const worker = new Worker(asyncComputationWorkerFileName.fileName);
   worker.onmessage = msg => {
     const {id, value, error} = msg.data as {id: number, value?: any, error?: string};
     returnWorker(worker);
