@@ -51,7 +51,7 @@ import {Tab} from 'neuroglancer/widget/tab_view';
 
 const OPACITY_JSON_KEY = 'opacity';
 const BLEND_JSON_KEY = 'blend';
-const SHADER_JSON_KEY = 'shader';
+export const SHADER_JSON_KEY = 'shader';
 const SHADER_CONTROLS_JSON_KEY = 'shaderControls';
 const CROSS_SECTION_RENDER_SCALE_JSON_KEY = 'crossSectionRenderScale';
 const CHANNEL_DIMENSIONS_JSON_KEY = 'channelDimensions';

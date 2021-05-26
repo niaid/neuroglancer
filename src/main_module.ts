@@ -8,7 +8,8 @@ import {PrecomputedDataSource} from 'neuroglancer/datasource/precomputed/fronten
 import {registerProvider} from 'neuroglancer/datasource/default_provider';
 import {disableContextMenu, disableWheel} from 'neuroglancer/ui/disable_default_actions';
 import {asyncComputationWorkerFileName} from "./asyncComputationWorkerFileName"
-
+export {SHADER_JSON_KEY } from "./neuroglancer/image_user_layer"
+export {DEFAULT_FRAGMENT_MAIN} from "./neuroglancer/sliceview/volume/image_renderlayer"
 
 export default class Neuroglancer {
   version() {
