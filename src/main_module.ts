@@ -8,6 +8,7 @@ import {PrecomputedDataSource} from 'neuroglancer/datasource/precomputed/fronten
 import {registerProvider} from 'neuroglancer/datasource/default_provider';
 import {disableContextMenu, disableWheel} from 'neuroglancer/ui/disable_default_actions';
 import {asyncComputationWorkerFileName} from "./asyncComputationWorkerFileName"
+import { AnnotationUserLayer } from './neuroglancer/annotation/user_layer';
 
 
 export default class Neuroglancer {
@@ -25,6 +26,7 @@ export const hedwigSetup = (options: {
   asyncComputationWorkerFileName.fileName = options.asyncComputationWorkerFileName
 
   registerLayerType('image', ImageUserLayer);
+  registerLayerType('annotation', AnnotationUserLayer);
   registerVolumeLayerType(VolumeType.IMAGE, ImageUserLayer);
 
   registerProvider('precomputed', () => new PrecomputedDataSource());
