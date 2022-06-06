@@ -28,7 +28,6 @@ export class VolumeChunkSourceParameters {
   url: string;
   encoding: VolumeChunkEncoding;
   sharding: ShardingParameters|undefined;
-  access_token:string;
 
   static RPC_ID = 'precomputed/VolumeChunkSource';
 }

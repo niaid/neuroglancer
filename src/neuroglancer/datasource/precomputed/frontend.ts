@@ -231,10 +231,9 @@ class PrecomputedMultiscaleVolumeChunkSource extends MultiscaleVolumeChunkSource
                  chunkSource: this.chunkManager.getChunkSource(PrecomputedVolumeChunkSource, {
                    spec,
                    parameters: {
-                     url: this.url + "%5C" + scaleInfo.key,
+                     url: resolvePath(this.url, scaleInfo.key),
                      encoding: scaleInfo.encoding,
                      sharding: scaleInfo.sharding,
-                     access_token: window.sessionStorage['access_token'],
                    }
                  }),
                  chunkToMultiscaleTransform,
@@ -460,12 +459,7 @@ async function getSkeletonSource(chunkManager: ChunkManager, url: string) {
 
 function getJsonMetadata(chunkManager: ChunkManager, url: string): Promise<any> {
   return chunkManager.memoize.getUncounted({'type': 'precomputed:metadata', url}, async () => {
-    const headers = new Headers();
-    const token = window.sessionStorage['access_token'];
-    headers.set('Authorization', `Bearer ${token}`);
-    let ri: RequestInit = {};
-    ri.headers = headers;
-    const response = await fetchSpecialOk(`${url}%5Cinfo`, ri);
+    const response = await fetchSpecialOk(`${url}/info`);
     return response.json();
   });
 }
