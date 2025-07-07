@@ -72,6 +72,8 @@ import { AutoRangeFinder } from "#src/widget/invlerp_range_finder.js";
 import type { LayerControlTool } from "#src/widget/layer_control.js";
 import type { LegendShaderOptions } from "#src/widget/shader_controls.js";
 import { Tab } from "#src/widget/tab_view.js";
+import {HistogramPanel} from "#src/widget/histogram.js";
+
 
 const inputEventMap = EventActionMap.fromObject({
   "shift?+mousedown0": { action: "set" },
@@ -729,10 +731,12 @@ export function adjustInvlerpBrightnessContrast(
 }
 
 export class InvlerpWidget extends Tab {
-  cdfPanel;
+  histogramPanel 
   boundElements;
   invertArrows: HTMLElement[];
   autoRangeFinder: AutoRangeFinder;
+
+
   get texture() {
     return this.histogramSpecifications.getFramebuffers(this.display.gl)[
       this.histogramIndex
@@ -751,7 +755,6 @@ export class InvlerpWidget extends Tab {
     public legendShaderOptions: LegendShaderOptions | undefined,
   ) {
     super(visibility);
-    this.cdfPanel = this.registerDisposer(new CdfPanel(this));
     this.boundElements = {
       range: createRangeBoundInputs("range", dataType, trackable),
       window: createRangeBoundInputs("window", dataType, trackable),
@@ -778,7 +781,8 @@ export class InvlerpWidget extends Tab {
     };
     this.invertArrows = [makeArrow(svg_arrowRight), makeArrow(svg_arrowLeft)];
     element.appendChild(boundElements.range.container);
-    element.appendChild(this.cdfPanel.element);
+    this.histogramPanel = this.registerDisposer(new HistogramPanel(this, NUM_CDF_LINES, histogramSamplerTextureUnit))
+    element.appendChild(this.histogramPanel.element);
     element.classList.add("neuroglancer-invlerp-widget");
     element.appendChild(boundElements.window.container);
     this.autoRangeFinder = this.registerDisposer(new AutoRangeFinder(this));
