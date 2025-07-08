@@ -122,6 +122,7 @@ const LAYOUT_SYMBOLS = new Map<string, string>([
   ["4panel", "◱"],
   ["4panel-alt", "◲"],
   ["3d", oneSquareSymbol],
+  ['2d', '2D'],
 ]);
 
 export function makeSliceView(
@@ -688,6 +689,12 @@ export const LAYOUTS = new Map<
       factory: (container, element, viewer, crossSections) =>
         new SinglePerspectiveLayout(container, element, viewer, crossSections),
     },
+  ],
+  [
+    '2d', {
+      factory: (container, element, viewer) =>
+        new SinglePanelLayout(container, element, viewer, "xy")
+    }
   ],
 ]);
 
