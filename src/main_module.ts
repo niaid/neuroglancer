@@ -35,9 +35,7 @@ declare let NEUROGLANCER_DEFAULT_STATE_FRAGMENT: string | undefined;
 
 export const hedwigSetup = (options: {
   target: HTMLElement | undefined,
-  bundleRoot: string | undefined,
-  chunkWorkerFileName: string,
-  hedwigHideZScaleBar: boolean 
+  hedwigShowScaleBar: boolean
 }) => {
 
   // registerDimensionToolForViewer()
@@ -48,6 +46,7 @@ export const hedwigSetup = (options: {
   disableWheel();
   let viewer = makeMinimalViewer({
     target: options.target,
+    hedwigShowScaleBar: options.hedwigShowScaleBar
   });
   setDefaultInputEventBindings(viewer.inputEventBindings);
   bindDefaultCopyHandler(viewer);

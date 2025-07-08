@@ -222,6 +222,7 @@ export interface ViewerOptions
   showLayerDialog: boolean;
   inputEventBindings: InputEventBindings;
   resetStateWhenEmpty: boolean;
+  hedwigShowScaleBar: boolean
 }
 
 const defaultViewerOptions =
@@ -515,6 +516,7 @@ export class Viewer extends RefCounted implements ViewerState {
     this.screenshotHandler = this.registerDisposer(new ScreenshotHandler(this));
     this.screenshotManager = this.registerDisposer(new ScreenshotManager(this));
     const {
+      hedwigShowScaleBar,
       dataContext = new DataManagementContext(display.gl, display),
       visibility = new WatchableVisibilityPriority(
         WatchableVisibilityPriority.VISIBLE,
@@ -544,6 +546,7 @@ export class Viewer extends RefCounted implements ViewerState {
         });
       })(),
     } = options;
+    this.showScaleBar = new TrackableBoolean(!!hedwigShowScaleBar, true)
     this.visibility = visibility;
     this.inputEventBindings = inputEventBindings;
     this.element = element;
