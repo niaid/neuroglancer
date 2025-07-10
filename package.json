@@ -1,8 +1,8 @@
 {
-  "name": "neuroglancer",
+  "name": "@niaid/neuroglancer",
   "description": "Visualization tool for 3-D volumetric data.",
   "license": "Apache-2.0",
-  "version": "2.40.1",
+  "version": "2.24.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/google/neuroglancer.git"
@@ -105,7 +105,7 @@
     "typings/**/*",
     "tsconfig.json"
   ],
-  "private": true,
+  "private": false,
   "type": "module",
   "exports": {
     ".": "./src/main_module.ts",
