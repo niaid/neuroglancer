@@ -19,7 +19,7 @@ import {
 } from "#src/util/lerp.js";
 import {startRelativeMouseDrag} from '#src/util/mouse_drag.js';
 import {getWheelZoomAmount} from '#src/util/wheel_zoom.js';
-import { NUM_CDF_LINES } from   "#src/widget/invlerp.js";
+import {NUM_CDF_LINES} from "#src/widget/invlerpExtras.js"
 
 
 const histogramSamplerTextureUnit = Symbol( "histogramSamplerTexture");

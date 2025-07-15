@@ -73,6 +73,7 @@ import type { LayerControlTool } from "#src/widget/layer_control.js";
 import type { LegendShaderOptions } from "#src/widget/shader_controls.js";
 import { Tab } from "#src/widget/tab_view.js";
 import {HistogramPanel} from "#src/widget/histogram.js";
+import {NUM_CDF_LINES} from "#src/widget/invlerpExtras.js"
 
 
 const inputEventMap = EventActionMap.fromObject({
@@ -336,10 +337,6 @@ export function getUpdatedRangeAndWindowParameters<
   return newBounds;
 }
 
-// 256 bins in total.  The first and last bin are for values below the lower bound/above the upper
-// bound.
-const NUM_HISTOGRAM_BINS_IN_RANGE = 254;
-export const NUM_CDF_LINES = NUM_HISTOGRAM_BINS_IN_RANGE + 1;
 
 /**
  * Panel that shows Cumulative Distribution Function (CDF) of visible data.
