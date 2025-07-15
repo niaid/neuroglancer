@@ -781,7 +781,7 @@ export class InvlerpWidget extends Tab {
     };
     this.invertArrows = [makeArrow(svg_arrowRight), makeArrow(svg_arrowLeft)];
     element.appendChild(boundElements.range.container);
-    this.histogramPanel = this.registerDisposer(new HistogramPanel(this, NUM_CDF_LINES, histogramSamplerTextureUnit))
+    this.histogramPanel = this.registerDisposer(new HistogramPanel(this, NUM_CDF_LINES))
     element.appendChild(this.histogramPanel.element);
     element.classList.add("neuroglancer-invlerp-widget");
     element.appendChild(boundElements.window.container);

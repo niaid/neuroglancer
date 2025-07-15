@@ -1,5 +1,5 @@
 import "#src/widget/histogram.css";
-import { RenderedPanel } from "#src/display_context.js";
+import { IndirectRenderedPanel} from "#src/display_context.js";
 import {getMemoizedBuffer} from '#src/webgl/buffer.js';
 import {defineLineShader, drawLines, initializeLineShader, VERTICES_PER_LINE} from '#src/webgl/lines.js';
 import {ShaderBuilder} from '#src/webgl/shader.js';
@@ -19,13 +19,16 @@ import {
 } from "#src/util/lerp.js";
 import {startRelativeMouseDrag} from '#src/util/mouse_drag.js';
 import {getWheelZoomAmount} from '#src/util/wheel_zoom.js';
+import { NUM_CDF_LINES } from   "#src/widget/invlerp.js";
 
 
-export class HistogramPanel extends RenderedPanel {
+const histogramSamplerTextureUnit = Symbol( "histogramSamplerTexture");
+
+export class HistogramPanel extends IndirectRenderedPanel {
   get drawOrder() {
     return 100;
   }
-  constructor(public parent: InvlerpWidget, public NUM_CDF_LINES: number, public histogramSamplerTextureUnit: Symbol) {
+  constructor(public parent: InvlerpWidget, public NUM_CDF_LINES: number) {
     super(parent.display, document.createElement('div'), parent.visibility);
     const {element} = this;
     element.classList.add('neuroglancer-invlerp-histogram-panel');
@@ -109,7 +112,6 @@ export class HistogramPanel extends RenderedPanel {
   }
   private dataValuesBuffer =
       this.registerDisposer(getMemoizedBuffer(this.gl, WebGL2RenderingContext.ARRAY_BUFFER, () => {
-            const {NUM_CDF_LINES} = this;
             const array = new Uint8Array(NUM_CDF_LINES * VERTICES_PER_LINE);
             for (let i = 0; i < NUM_CDF_LINES; ++i) {
               for (let j = 0; j < VERTICES_PER_LINE; ++j) {
@@ -121,7 +123,6 @@ export class HistogramPanel extends RenderedPanel {
 
   private lineShader = this.registerDisposer((() => {
     const builder = new ShaderBuilder(this.gl);
-    const {histogramSamplerTextureUnit} = this;
     defineLineShader(builder);
     builder.addTextureSampler('sampler2D', 'uHistogramSampler', histogramSamplerTextureUnit);
     builder.addOutputBuffer('vec4', 'out_color', 0);
@@ -178,8 +179,8 @@ out_color = uColor;
     return builder.build();
   })());
 
-  draw() {
-    const {lineShader, gl, regionShader, parent: {dataType, trackable: {value: bounds}}, NUM_CDF_LINES, histogramSamplerTextureUnit} = this;
+  drawIndirect() {
+    const {lineShader, gl, regionShader, parent: {dataType, trackable: {value: bounds}}, NUM_CDF_LINES, } = this;
     this.setGLLogicalViewport();
     gl.enable(WebGL2RenderingContext.BLEND);
     gl.blendFunc(WebGL2RenderingContext.SRC_ALPHA, WebGL2RenderingContext.ONE_MINUS_SRC_ALPHA);
