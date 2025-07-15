@@ -222,7 +222,7 @@ export interface ViewerOptions
   showLayerDialog: boolean;
   inputEventBindings: InputEventBindings;
   resetStateWhenEmpty: boolean;
-  hedwigShowScaleBar: boolean
+  hedwigShowScaleBar: boolean;
 }
 
 const defaultViewerOptions =
@@ -546,7 +546,7 @@ export class Viewer extends RefCounted implements ViewerState {
         });
       })(),
     } = options;
-    this.showScaleBar = new TrackableBoolean(!!hedwigShowScaleBar, true)
+    this.showScaleBar = new TrackableBoolean(!!hedwigShowScaleBar, true);
     this.visibility = visibility;
     this.inputEventBindings = inputEventBindings;
     this.element = element;
