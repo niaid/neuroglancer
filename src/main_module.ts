@@ -1,41 +1,52 @@
-import {bindDefaultCopyHandler, bindDefaultPasteHandler} from 'neuroglancer/ui/default_clipboard_handling';
-import {setDefaultInputEventBindings} from 'neuroglancer/ui/default_input_event_bindings';
-import {makeMinimalViewer} from 'neuroglancer/ui/minimal_viewer';
-import { registerPositionWidgetTool } from './neuroglancer/widget/registerPositionWidgetTools';
-export {makeLayer} from "neuroglancer/layer"
-import {disableContextMenu, disableWheel} from 'neuroglancer/ui/disable_default_actions';
-export {insertDimensionAt} from "neuroglancer/coordinate_transform"
-export {DEFAULT_FRAGMENT_MAIN} from "neuroglancer/sliceview/volume/image_renderlayer"
+import "#src/util/polyfills.js";
+import "#src/layer/enabled_frontend_modules.js";
+import "#src/datasource/enabled_frontend_modules.js";
+import "#src/kvstore/enabled_frontend_modules.js";
+import {
+  bindDefaultCopyHandler,
+  bindDefaultPasteHandler,
+} from "#src/ui/default_clipboard_handling.js";
+import { setDefaultInputEventBindings } from "#src/ui/default_input_event_bindings.js";
+import { makeMinimalViewer } from "#src/ui/minimal_viewer.js";
+import {
+  disableContextMenu,
+  disableWheel,
+} from "#src/ui/disable_default_actions.js";
+import "#src/datasource/precomputed/register_default.js";
+import "#src/datasource/zarr/register_default.js";
+import "#src/layer/image/index.js";
+import "#src/layer/annotation/index.js";
 
-import "neuroglancer/datasource/precomputed/register_default"
-import "neuroglancer/datasource/zarr/register_default"
-import "neuroglancer/image_user_layer";
-import "neuroglancer/annotation/user_layer"
+export { makeLayer } from "#src/layer/index.js";
+export { insertDimensionAt } from "#src/coordinate_transform.js";
+export { DEFAULT_FRAGMENT_MAIN } from "#src/sliceview/volume/image_renderlayer.js";
 
 export default class Neuroglancer {
   version() {
-    return '0.0.1';
+    return "0.0.1";
   }
 }
 
+/**
+ * Sets up the default neuroglancer viewer.
+ */
 
 export const hedwigSetup = (options: {
-  target: HTMLElement | undefined,
-  bundleRoot: string | undefined,
-  chunkWorkerFileName: string,
-  hedwigHideZScaleBar: boolean 
+  target: HTMLElement | undefined;
+  hedwigShowScaleBar: boolean;
 }) => {
-
-  registerPositionWidgetTool()
+  // registerDimensionToolForViewer()
+  // registerDimensionToolForUserLayer()
+  // registerDimensionToolForLayerGroupViewer()
 
   disableContextMenu();
   disableWheel();
   let viewer = makeMinimalViewer({
-    chunkWorkerFileName: options.chunkWorkerFileName,
-    hedwigHideZScaleBar: options.hedwigHideZScaleBar,
-  }, options.target);
+    target: options.target,
+    hedwigShowScaleBar: options.hedwigShowScaleBar,
+  });
   setDefaultInputEventBindings(viewer.inputEventBindings);
   bindDefaultCopyHandler(viewer);
   bindDefaultPasteHandler(viewer);
   return viewer;
-}
+};

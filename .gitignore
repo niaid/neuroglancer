@@ -1,4 +1,4 @@
-/node_modules/
+node_modules
 /dist/
 /trans
 /build/
@@ -14,3 +14,15 @@ tsconfig.tsbuildinfo
 /.log
 *.so
 *.egg-info
+.mypy_cache
+.nox
+.pytest_cache
+/ngauth_server/secrets/
+.eslintcache
+/lib
+/.firebase
+/test-results
+/playwright-report
+-/docs/python/api/index.rst
+/docs/python/api/*.rst
+/.vite

@@ -7,24 +7,24 @@
     "noUnusedLocals": true,
     "preserveConstEnums": true,
     "experimentalDecorators": true,
+    "alwaysStrict": true,
+    "allowJs": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": false,
     "esModuleInterop": true,
     "sourceMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "incremental": true,
-    "target": "ES2017",
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "target": "ES2022",
     "newLine": "LF",
     "baseUrl": ".",
-    "paths": {
-      "*": ["*"],
-      "neuroglancer/*": ["src/neuroglancer/*"],
-      "jpgjs": ["third_party/jpgjs/jpg.js"],
-      "neuroglancer-testdata/*": ["testdata/*"]
-    },
-    "lib": ["dom", "es2020", "dom.iterable"],
+    "lib": ["dom", "webworker", "esnext", "dom.iterable"],
     "typeRoots": [],
-    "module": "ESNext"
+    "module": "ESNext",
   },
   "exclude": [
     "node_modules",
@@ -33,6 +33,8 @@
     "python",
     "testdata",
     "examples",
-    "config"
-  ]
+    "config",
+    "docs",
+    "ngauth_server",
+  ],
 }

@@ -20,8 +20,6 @@ Neuroglancer client if Python data sources are used.
 
 It is recommended that you activate a suitable Python virtual environment before installing.
 
-Python 3.5 or later is required.
-
 You can install the latest published package from [PyPI](https://pypi.org/project/neuroglancer)
 with:
 
@@ -77,40 +75,30 @@ extension module.
 For normal installation, run the following from the root of the repository:
 
 ```shell
-python setup.py install
+pip install .
 ```
 
-That will automatically build the Neuroglancer client using Node.js if it has not already been built
-(i.e. if `neuroglancer/static/index.html` does not exist).  To rebuild the Neuroglancer client
-explicitly, you can use:
-
-```shell
-python setup.py bundle_client
-```
-
-or
+That will automatically build the Neuroglancer client using Node.js if it has
+not already been built (i.e. if `neuroglancer/static/client/index.html` does not
+exist).  To rebuild the Neuroglancer client explicitly, you can use:
 
 ```shell
 npm run build-python
 ```
 
-Note: Installing from a local checkout using `pip install .` also works, but it may be slower
-because it makes a full copy of the local directory (https://github.com/pypa/pip/pull/7882),
-including the possibly-large `.git` and `node_modules` directories.
-
 #### Editable installation (for development purposes)
 
-During development, an *editable* installation allows the package to be imported directly from the
-local checkout directory:
+For development of Neuroglancer itself, you can use [uv](https://astral.sh/uv)
+to automatically set up an *editable* installation.
 
 ```shell
-pip install -e .
+uv sync
 ```
 
 Any changes you make to the .py source files take effect the next time the package is imported,
 without the need to reinstall.  If you make changes to the Neuroglancer client, you still need to
 rebuild it with `npm run build-python`.  You can also keep the Neuroglancer client continuously
-up-to-date by running `npm run dev-server-python`.
+up-to-date by running `npm run build-python:watch`.
 
 ## Examples
 
@@ -118,7 +106,7 @@ See the example programs in the [examples/](examples/) directory.  Run them
 using the Python interpreter in interactive mode, e.g.
 
 ```shell
-python -i example.py
+uv run python -i example.py
 ```
 
 or using the IPython magic command
@@ -130,7 +118,7 @@ or using the IPython magic command
 Do not run an example non-interactively as
 
 ```shell
-python example.py
+uv run python example.py
 ```
 because then the server will exit immediately.
 
@@ -148,7 +136,7 @@ randomly-generated 160-bit secret key.
 
 ## Test suite
 
-The test suite can be run using the `tox` command.  Some of the tests require a WebGL2-enabled web
+The test suite can be run using the `nox` command.  Some of the tests require a WebGL2-enabled web
 browser in order to test interaction with the Neuroglancer client.  Both Chrome and Firefox are
 supported, but currently due to bugs in Swiftshader, Chrome Headless does not work.  Firefox
 Headless also currently does not support WebGL at all.  On Linux, you can successfully run the tests
@@ -156,17 +144,15 @@ headlessly on Firefox using `xvfb-run`.  On other platforms, tests can't be run 
 
 ```shell
 # For headless using Firefox on xvfb (Linux only)
-sudo apt-get instrall xvfb # On Debian-based systems
-tox -e firefox-xvfb  # Run tests using non-headless Firefox
+sudo apt-get install xvfb # On Debian-based systems
+uvx nox -s test_xvfb -- --browser firefox  # Run tests using Firefox in xvfb
 
 # For non-headless using Chrome
-tox -e chrome
+uvx nox -s test -- --browser chrome
 
 # For non-headless using Firefox
-tox -e firefox
+uvx nox -s test -- --browser firefox
 
 # To run only tests that do not require a browser
-tox -e skip-browser-tests
+uvx nox -s test -- --skip-browser-tests
 ```
-
-Refer to [tox.ini](../tox.ini) for details of the test procedure.
