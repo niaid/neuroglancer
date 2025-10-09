@@ -64,7 +64,10 @@ import {
 } from "#src/webgl/lines.js";
 import { ShaderBuilder } from "#src/webgl/shader.js";
 import { getShaderType } from "#src/webgl/shader_lib.js";
-import type { InvlerpParameters } from "#src/webgl/shader_ui_controls.js";
+import type {
+  ImageInvlerpParameters,
+  InvlerpParameters,
+} from "#src/webgl/shader_ui_controls.js";
 import { getSquareCornersBuffer } from "#src/webgl/square_corners_buffer.js";
 import { setRawTextureParameters } from "#src/webgl/texture.js";
 import { makeIcon } from "#src/widget/icon.js";
@@ -339,7 +342,8 @@ export function getUpdatedRangeAndWindowParameters<
 /**
  * Panel that shows Cumulative Distribution Function (CDF) of visible data.
  */
-class CdfPanel extends IndirectRenderedPanel {
+
+export class CdfPanel extends IndirectRenderedPanel {
   get drawOrder() {
     return 100;
   }
@@ -743,7 +747,9 @@ export class InvlerpWidget extends Tab {
     visibility: WatchableVisibilityPriority,
     public display: DisplayContext,
     public dataType: DataType,
-    public trackable: WatchableValueInterface<InvlerpParameters>,
+    public trackable: WatchableValueInterface<
+      ImageInvlerpParameters | InvlerpParameters
+    >,
     public histogramSpecifications: HistogramSpecifications,
     public histogramIndex: number,
     public legendShaderOptions: LegendShaderOptions | undefined,

@@ -76,7 +76,7 @@ import {
   updateInputBoundWidth,
   createCDFLineShader,
 } from "#src/widget/invlerp.js";
-import { NUM_CDF_LINES } from "./invlerpExtras";
+import { NUM_CDF_LINES } from "#src/widget/invlerpExtras.js";
 import { AutoRangeFinder } from "#src/widget/invlerp_range_finder.js";
 import type {
   LayerControlFactory,

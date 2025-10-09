@@ -28,6 +28,9 @@ import {
 import { startRelativeMouseDrag } from "#src/util/mouse_drag.js";
 import { getWheelZoomAmount } from "#src/util/wheel_zoom.js";
 import { NUM_CDF_LINES } from "#src/widget/invlerpExtras.js";
+import { WatchableValueInterface } from "#src/trackable_value.js";
+import { ImageInvlerpParameters } from "#src/webgl/shader_ui_controls.js";
+import { DataType } from "#src/util/data_type.js";
 
 const histogramSamplerTextureUnit = Symbol("histogramSamplerTexture");
 
@@ -134,7 +137,12 @@ export class HistogramPanel extends IndirectRenderedPanel {
         const {
           dataType,
           trackable: { value: bounds },
-        } = this.parent;
+        } = <
+          {
+            dataType: DataType;
+            trackable: WatchableValueInterface<ImageInvlerpParameters>;
+          }
+        >this.parent;
         const newLower = computeLerp(
           bounds.window,
           dataType,
