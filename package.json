@@ -90,7 +90,7 @@
     "core-js": "^3.40.0",
     "crc-32": "^1.2.2",
     "gl-matrix": "3.1.0",
-    "ikonate": "github:mikolajdobrucki/ikonate#a86b4107c6ec717e7877f880a930d1ccf0b59d89",
+    "ikonate": "github:jingdid/ikonate#3c19d893c1ddb4eaf3df41dfb8520f8ecb2aefba",
     "lodash-es": "^4.17.21",
     "msgpackr": "^1.11.2",
     "nifti-reader-js": "^0.6.8",
