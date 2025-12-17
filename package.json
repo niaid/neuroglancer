@@ -2,7 +2,7 @@
   "name": "@niaid/neuroglancer",
   "description": "Visualization tool for 3-D volumetric data.",
   "license": "Apache-2.0",
-  "version": "2.24.3",
+  "version": "2.24.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/google/neuroglancer.git"
@@ -95,7 +95,7 @@
     "msgpackr": "^1.11.2",
     "nifti-reader-js": "^0.6.8",
     "numcodecs": "^0.3.2",
-    "valibot": "^1.0.0-beta.15"
+    "valibot": "^1.2.0"
   },
   "overrides": {
     "@puppeteer/browsers": ">=2"
